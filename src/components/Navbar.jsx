@@ -1,12 +1,29 @@
 import axios from "axios";
+import { FaCheckCircle } from "react-icons/fa";
 
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { BASE_URL } from "../utils/constants";
 import { removeUser } from "../utils/userSlice";
 import { removeFeed } from "../utils/feedSlice";
+import { useEffect, useState } from "react";
 
 const Navbar = () => {
+  const [isUserPremium, setIsUserPremium] = useState(false);
+  useEffect(() => {
+    verifyPremiumUser();
+  }, []);
+
+  const verifyPremiumUser = async () => {
+    const res = await axios.get(BASE_URL + "/premium/verify", {
+      withCredentials: true,
+    });
+
+    if (res.data.isPremium) {
+      setIsUserPremium(true);
+    }
+  };
+
   const dispatch = useDispatch();
   const user = useSelector((store) => store.user);
   const navigate = useNavigate();
@@ -23,13 +40,18 @@ const Navbar = () => {
   };
 
   return (
-    <div className="navbar bg-base-300 shadow-sm">
+    <div className="navbar bg-base-300 shadow-sm ">
       <div className="flex-1">
         <Link to={"/"} className="btn btn-ghost text-xl">
           DEVTinder
         </Link>
       </div>
-      {user && <p>Welcome{"  " + user.firstName}</p>}
+      {user && (
+        <div className="flex items-center gap-2">
+          <span className="font-semibold">Welcome{"  " + user.firstName}</span>
+          {isUserPremium && <FaCheckCircle className="text-blue-500 text-lg" />}
+        </div>
+      )}
 
       <div className="flex gap-2">
         {user && (

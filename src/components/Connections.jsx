@@ -3,6 +3,8 @@ import { BASE_URL } from "../utils/constants";
 import { useDispatch, useSelector } from "react-redux";
 import { addConnections } from "../utils/connectionsSilce";
 import { useEffect } from "react";
+import { HiOutlineChatBubbleLeftRight } from "react-icons/hi2";
+import { Link } from "react-router-dom";
 
 const Connections = () => {
   const dispatch = useDispatch();
@@ -17,7 +19,7 @@ const Connections = () => {
       console.log(connectionsData);
 
       dispatch(
-        addConnections(connectionsData?.data?.data || connectionsData?.data)
+        addConnections(connectionsData?.data?.data || connectionsData?.data),
       );
     } catch (error) {
       console.log(error);
@@ -43,7 +45,7 @@ const Connections = () => {
         {connections.map((connection, index) => {
           return (
             <div
-              className="my-2 md:my-4 flex p-4 rounded-2xl bg-base-300 gap-4 justify-center items-center"
+              className="my-2 md:my-4 flex p-4 rounded-2xl bg-base-300 gap-4  items-center"
               key={index}
             >
               <div>
@@ -54,9 +56,18 @@ const Connections = () => {
                 />
               </div>
               <div>
-                <h1 className="text-xl font-medium pb-2 text-white">
-                  {connection.firstName}
-                </h1>
+                <div className="flex items-center gap-5">
+                  <h1 className="text-xl font-medium pb-2 text-white">
+                    {connection.firstName}
+                  </h1>
+                  <Link to={"/chat/" + connection._id}>
+                    <HiOutlineChatBubbleLeftRight
+                      size={22}
+                      className="text-white"
+                    />
+                  </Link>
+                </div>
+
                 <p className="text-gray-300">{connection.about}</p>
               </div>
             </div>

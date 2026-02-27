@@ -32,12 +32,24 @@ const Body = () => {
     fetchUser();
   }, []);
   return (
-    <>
-      <Navbar />
-      <Outlet />
-      <Fotter />
+    <div className="h-screen bg-black text-white">
+      {/* Fixed Navbar */}
+      <div className="fixed top-0 left-0 w-full h-16 z-50">
+        <Navbar />
+      </div>
+
+      {/* Scrollable Content Area */}
+      <main className="pt-16 pb-16 h-full overflow-y-auto">
+        <Outlet />
+      </main>
+
+      {/* Fixed Footer */}
+      <div className="fixed bottom-0 left-0 w-full h-16">
+        <Fotter />
+      </div>
+
       <Toast />
-    </>
+    </div>
   );
 };
 
