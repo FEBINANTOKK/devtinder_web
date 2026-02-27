@@ -8,7 +8,7 @@ import Feed from "./components/Feed";
 import Connections from "./components/Connections";
 import Requests from "./components/Requests";
 import Premium from "./components/Premium";
-import Chat from "./components/cHAT.JSX";
+import Chat from "./components/chat.JSX";
 
 function App() {
   return (
